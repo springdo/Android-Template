@@ -1,6 +1,7 @@
 package com.practiceapps.donal.mybluekins;
 
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +20,19 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // using custom toolbar so gotta set it up
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(mToolbar);
+        // used to show icon for home on the action bar ie hamburger
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        //set up for drawer nav
+//        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // passing the toolbar to this so onConfigurationChanged and onOptionsItemSelected can be
+        // custom handled by the NavigationDrawerFragment class
+        navigationDrawerFragment.setUp(R.id.fragment_navigation_drawer, drawerLayout, mToolbar);
     }
 
 

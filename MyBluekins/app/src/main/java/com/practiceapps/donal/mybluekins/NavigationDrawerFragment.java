@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     // not sure why example does not do all this in constructor..... hmmmm
-    public void setUp(int fragment_navigation_drawer, DrawerLayout drawerLayout, Toolbar toolbar) {
+    public void setUp(int fragment_navigation_drawer, DrawerLayout drawerLayout, final Toolbar toolbar) {
 
         // used to draw the drawer
         mContainerView =  getActivity().findViewById(fragment_navigation_drawer);
@@ -85,6 +86,16 @@ public class NavigationDrawerFragment extends Fragment {
                 // redraws the activity menu
                 getActivity().invalidateOptionsMenu();
             }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+//                Log.d(getActivity().getLocalClassName(), "Offset is   ::  " + slideOffset);
+                // use if block to stop the thing going completely dark
+                if (slideOffset < 0.6){
+                    toolbar.setAlpha(1-slideOffset);
+                }
+            }
+
         };
 
         // no saved instance and no previous show of the drawer

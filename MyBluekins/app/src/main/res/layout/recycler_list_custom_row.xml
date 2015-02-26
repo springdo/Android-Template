@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drawer_item_height"
+    android:orientation="horizontal"
+    ripple:rv_rippleDuration="100"
+    ripple:rv_centered="true"
+    ripple:rv_color="@color/colorControlHighlight">
+
+    <ImageView
+        android:id="@+id/recyclerviewlist_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/recycler_list_pic_padding"
+        android:layout_marginRight="@dimen/recycler_list_pic_padding"
+        android:src="@drawable/ic_action" />
+
+    <TextView
+        android:id="@+id/recyclerviewlist_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/recycler_list_text_padding"
+        android:text="Some Dummy Text"
+        android:textColor="@color/primary_dark_material_light" />
+</com.andexert.library.RippleView>

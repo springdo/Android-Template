@@ -1,0 +1,63 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.practiceapps.donal.mybluekins.fragments.SettingsFragment">
+
+
+
+    <ListPreference
+        android:defaultValue="https://"
+        android:entries="@array/pref_http_name"
+        android:entryValues="@array/pref_http_values"
+        android:key="PROTOCOL"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/pref_http_title" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_domain"
+        android:inputType="text"
+        android:key="DOMAIN"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_domain_name" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_port"
+        android:inputType="number"
+        android:key="PORT"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_port_name" />
+
+    <EditTextPreference
+        android:defaultValue=""
+        android:inputType="textCapWords"
+        android:key="USERNAME"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_username" />
+
+    <EditTextPreference
+        android:defaultValue=""
+        android:inputType="textPassword"
+        android:key="PASSWORD"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:password="true"
+        android:title="@string/pref_password" />
+
+
+    <CheckBoxPreference
+
+        android:defaultValue="true"
+        android:key="CLOUD_SAVE"
+        android:summary="@string/pref_cloud_desc"
+        android:title="@string/pref_cloud_title" />
+</PreferenceScreen>

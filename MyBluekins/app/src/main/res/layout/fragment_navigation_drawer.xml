@@ -3,17 +3,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEE"
-    tools:context="com.practiceapps.donal.mybluekins.NavigationDrawerFragment">
+    tools:context="com.practiceapps.donal.mybluekins.fragments.NavigationDrawerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/containerDrawerImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_width="280dp"
+            android:layout_height="140dp"
+            android:src="@drawable/ic_abstract"/>
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawerList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/containerDrawerImage" >
+
+    </android.support.v7.widget.RecyclerView>
+    <!-- Tried to make a bar appear above the settings item
     <ImageView
-        android:layout_width="280dp"
-        android:layout_height="140dp"
-        android:src="@drawable/ic_abstract"/>
-
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:src="@android:drawable/divider_horizontal_bright"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp" />
+        -->
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/recycler_list_pic_padding"
+        android:id="@+id/drawer_switch"
+        layout="@layout/recycler_list_custom_row"
+        android:layout_above="@+id/drawer_settings" />
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/recycler_list_pic_padding"
+        android:id="@+id/drawer_settings"
+        layout="@layout/recycler_list_custom_row"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

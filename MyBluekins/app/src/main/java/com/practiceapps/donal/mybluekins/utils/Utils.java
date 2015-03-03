@@ -43,4 +43,24 @@ public class Utils {
 
         return password;
     }
+
+    public static String getUrlWithPassword(Context context){
+        final String PREF_KEY_PORT = "PORT";
+        final String PREF_KEY_DOMAIN = "DOMAIN";
+        final String PREF_KEY_PROTOCOL = "PROTOCOL";
+        final String PREF_KEY_USERNAME = "USERNAME";
+        final String PREF_KEY_PASSPORT = "PASSWORD";
+        final String defaultValue = "";
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+//        sharedPreferences.getString(prefName, defaultValue);
+
+        String url = sharedPreferences.getString(PREF_KEY_PROTOCOL, defaultValue) +
+                sharedPreferences.getString(PREF_KEY_USERNAME, defaultValue) + ":"+
+                sharedPreferences.getString(PREF_KEY_PASSPORT, defaultValue) + "@"+
+                sharedPreferences.getString(PREF_KEY_DOMAIN, defaultValue) + ":"+
+                sharedPreferences.getString(PREF_KEY_PORT, defaultValue) + "/jenkins/";
+        return url;
+    }
 }

@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drawer_item_height"
+    android:baselineAligned="false">
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/build_summary_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/recycler_list_pic_padding"
+        android:layout_marginRight="@dimen/recycler_list_pic_padding"
+        android:src="@drawable/ic_red"
+        android:layout_gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/build_summary_jobname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/recycler_list_text_padding"
+        android:text="@string/default_job_name"
+        android:textColor="@color/primary_dark_material_light" />
+
+</LinearLayout>

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practiceapps.donal.mybluekins.*;
 import com.practiceapps.donal.mybluekins.POJO.Jobs;
+import com.practiceapps.donal.mybluekins.adapters.BuildSummaryAdapter;
 import com.practiceapps.donal.mybluekins.logging.L;
 import com.practiceapps.donal.mybluekins.network.VolleySingleton;
 import com.practiceapps.donal.mybluekins.utils.Utils;
@@ -50,7 +51,8 @@ public class BuildSummaryFragment extends Fragment {
     // init these in onCreateView
     private VolleySingleton mVolley;
     private RequestQueue mRequestQ;
-    private ArrayList<Jobs> mJobsArrayList =  new ArrayList<Jobs>();
+    private ArrayList<Jobs> mJobsArrayList =  new ArrayList<>();
+    private BuildSummaryAdapter mBuildSummaryAdapter;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -91,13 +93,20 @@ public class BuildSummaryFragment extends Fragment {
         }
         mVolley = VolleySingleton.getInstance();
         mRequestQ =  mVolley.getRequestQueue();
+
+
+    }
+
+    private void sendJSONRequest(){
         L.mV(getActivity(), Utils.getUrl(getActivity()));
         JsonObjectRequest jsonObjectRequest =  new JsonObjectRequest(Request.Method.GET, /*"http://blue-jenkins.mybluemix.net/jenkins/api/json/"*/Utils.getUrl(getActivity())+"api/json/", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
                 try {
-                    parseJSONResponse(response);
+                    mJobsArrayList = parseJSONResponse(response);
+                    mBuildSummaryAdapter.setJobsArrayList(mJobsArrayList);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -121,11 +130,13 @@ public class BuildSummaryFragment extends Fragment {
         };
         // DON"T FORGET TO ADD THE REQUEST OT THE QUEUE!!
         mRequestQ.add(jsonObjectRequest);
-    }
+    };
 
-    private void parseJSONResponse(JSONObject response) throws IOException {
+    private ArrayList<Jobs> parseJSONResponse(JSONObject response) throws IOException {
+        ArrayList<Jobs> jobsAList = new ArrayList<>();
+
         if(response.length() == 0 || response == null){
-            return;
+            return jobsAList;
         }
         // Using JACKSON to create POJO from JSON
         // tut http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
@@ -150,11 +161,12 @@ public class BuildSummaryFragment extends Fragment {
         while (i < jobsArrayNode.size()) {
             L.mV(getActivity(), String.valueOf(jobsArrayNode.get(i)));
             Jobs current = objectMapper.readValue(String.valueOf(jobsArrayNode.get(i)), Jobs.class);
-            mJobsArrayList.add(current);
+            jobsAList.add(current);
             i++;
         }
 
-
+        L.mV(getActivity(), "jobsAList :: "+ String.valueOf(jobsAList));
+        return jobsAList;
 //        L.tS(getActivity(), String.valueOf(mJobsArrayList.get(2)));
 //        L.tL(getActivity(), mJobsArrayList.get(2).getName());
     }
@@ -162,15 +174,24 @@ public class BuildSummaryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+//        L.tS(getActivity(), "onCreateView entered ");
+
         View layout = inflater.inflate(R.layout.fragment_build_summary, container, false);
+        sendJSONRequest();
 
         mRecyclerView = (RecyclerView) layout.findViewById(R.id.build_summary_recycler);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        // Inflate the layout for this ;fragment
+
+
+        // init and set data on the adaper
+        mBuildSummaryAdapter = new BuildSummaryAdapter(getActivity(), mJobsArrayList);
+        L.mV(getActivity(), "onCreateView data list :: "+String.valueOf(mJobsArrayList));
+
+        mBuildSummaryAdapter.setJobsArrayList(mJobsArrayList);
+        mRecyclerView.setAdapter(mBuildSummaryAdapter);
         return layout;
 
-        // NOTE for grey keys are aborted, disabled, notbuilt
     }
 
 

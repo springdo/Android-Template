@@ -4,6 +4,7 @@ package com.practiceapps.donal.mybluekins.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -25,6 +26,7 @@ import com.practiceapps.donal.mybluekins.*;
 import com.practiceapps.donal.mybluekins.helper.*;
 import com.practiceapps.donal.mybluekins.activities.*;
 import com.practiceapps.donal.mybluekins.logging.L;
+import com.practiceapps.donal.mybluekins.utils.Utils;
 
 
 import java.util.ArrayList;
@@ -121,7 +123,7 @@ public class NavigationDrawerFragment extends Fragment implements DrawerClickLis
         // need an array of images and array of titles for the drawer
         // material designs specifies these should be hardcoded!
 
-        String[] titles ={"New Item", "People", "Build History", "Manage Jenkins", "Credentials", "My Views"};
+        String[] titles ={"New Item", "People", "Build History", "Manage Jenkins", "Credentials", "View in Browser"};
         int[] icons = {R.drawable.ic_newitem, R.drawable.ic_people, R.drawable.ic_clipboard,
                 R.drawable.ic_spanner, R.drawable.ic_manage, R.drawable.ic_myviews};
 
@@ -224,7 +226,13 @@ public class NavigationDrawerFragment extends Fragment implements DrawerClickLis
         if (position == 1) {
             Toast.makeText(getActivity(), "toastposition 1", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getActivity(), SubActivity.class));
-        } else {
+        } else if (position == 5){
+            Intent browser = new Intent(Intent.ACTION_VIEW);
+            browser.setData(Uri.parse(Utils.getUrl(getActivity())));
+            startActivity(browser);
+        }
+
+        else {
             startActivity(new Intent(getActivity(), SubActivity.class));
         }
     }

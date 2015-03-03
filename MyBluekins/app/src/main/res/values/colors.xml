@@ -4,13 +4,22 @@
     <!--<color name="primaryColor">#2196F3</color>-->
     <!--<color name="primaryColorDark">#1976D2</color>-->
     <!--<color name="colorAccent">#9C27B0</color>-->
-    <color name="primaryColor">#673AB7</color>
-    <color name="primaryColorDark">#512DA8</color>
-    <color name="primary_light">#D1C4E9</color>
+    <!--<color name="primaryColor">#673AB7</color>-->
+    <!--<color name="primaryColorDark">#512DA8</color>-->
+    <!--&lt;!&ndash;<color name="primary_light">#D1C4E9</color>&ndash;&gt;-->
+    <!--<color name="colorAccent">#009688</color>-->
+    <!--<color name="primary_text">#212121</color>-->
+    <!--<color name="secondary_text">#727272</color>-->
+    <!--<color name="icons">#FFFFFF</color>-->
+    <!--<color name="divider">#B6B6B6</color>-->
+    <color name="colorControlHighlight">#B6B6B6</color>
+
+    <color name="primaryColor">#FF9800</color>
+    <color name="primaryColorDark">#F57C00</color>
+    <color name="primary_light">#FFE0B2</color>
     <color name="colorAccent">#009688</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>
-    <color name="icons">#FFFFFF</color>
+    <color name="icons">#212121</color>
     <color name="divider">#B6B6B6</color>
-    <color name="colorControlHighlight">#B6B6B6</color>
 </resources>

@@ -8,7 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.practiceapps.donal.rottentomato.MyApplication;
 import com.practiceapps.donal.rottentomato.R;
+import com.practiceapps.donal.rottentomato.logging.L;
+import com.practiceapps.donal.rottentomato.network.RottenAPIServiceInterface;
+import com.practiceapps.donal.rottentomato.pojo.MoviesInTheatre.MoviesInTheatre;
+
+import javax.security.auth.callback.Callback;
+
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 
 public class ViewPagerFragment extends Fragment {
@@ -38,6 +50,30 @@ public class ViewPagerFragment extends Fragment {
         if (bundle !=null){
             textView.setText("Dummy Fragment you should not see this :: pos  "+bundle.getInt("POSITION"));
         }
+
+//        MoviesInTheatre moviesInTheatre = MyApplication.getRottenAPIServiceInterface().InTheatres();
+
+//        RestAdapter restAdapter = new RestAdapter.Builder()
+//                .setEndpoint("http://api.rottentomatoes.com")
+//                .setConverter(new GsonConverter(new Gson()))
+//                .build();
+//        RottenAPIServiceInterface rottenAPIServiceInterface = restAdapter.create(RottenAPIServiceInterface.class);
+//        rottenAPIServiceInterface.InTheatres(new retrofit.Callback<MoviesInTheatre>() {
+
+        MyApplication.getRottenAPIServiceInterface().InTheatres(new retrofit.Callback<MoviesInTheatre>() {
+            @Override
+            public void success(MoviesInTheatre moviesInTheatre, Response response) {
+                L.mV(getActivity(),  "Movies in Theatre data total data :: "+moviesInTheatre.getTotal());
+                L.tS(getActivity(), moviesInTheatre.toString());
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                L.tS(getActivity(), String.valueOf(error));
+
+            }
+        });
 
         return layout;
     }

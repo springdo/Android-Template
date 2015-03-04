@@ -1,5 +1,5 @@
 
-package com.practiceapps.donal.rottentomato.pojo;
+package com.practiceapps.donal.rottentomato.pojo.MoviesInTheatre;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

@@ -5,15 +5,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_hint">Search movies</string>
 
     <string-array name="tabs">
-        <item>In Theatres</item>
         <item>Upcoming Movies</item>
+        <item>In Theatres</item>
         <item>DVD Releases</item>
         <item>dummy1</item>
         <item>dummy2</item>
         <item>dummy3</item>
     </string-array>
 
+    <string name="title_activity_search">SearchActivity</string>
 
 </resources>

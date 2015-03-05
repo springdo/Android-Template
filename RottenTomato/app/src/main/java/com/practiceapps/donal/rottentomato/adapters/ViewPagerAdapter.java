@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.practiceapps.donal.rottentomato.*;
+import com.practiceapps.donal.rottentomato.fragments.InTheatresFragment;
 import com.practiceapps.donal.rottentomato.fragments.ViewPagerFragment;
 
 /**
@@ -20,8 +21,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     String[] tabs;
 
     // old cp code . . .. .
-    private final int BUILD_SUMMARY = 0;
-    private final int BUILD_QUEUE = 1;
+    private final int IN_THEATRES = 1;
+    private final int BUILD_QUEUE = 0;
     private final int BUILD_NODES = 2;
 
     public ViewPagerAdapter(FragmentManager fm, Context context) {
@@ -35,22 +36,17 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     // method called automagically when user moves item on the tab bar
     public Fragment getItem(int position) {
-        ViewPagerFragment fragment = ViewPagerFragment.getInstance(position);
-//        // create frag variable
-//        Fragment fragment = null;
-//        switch (position){
-//            case BUILD_SUMMARY :
-//                fragment = BuildSummaryFragment.newInstance("","");
-//                break;
-//            case BUILD_QUEUE:
-//                fragment = BuildQueueFragment.newInstance("","");
-//                break;
-//            case BUILD_NODES:
-//                fragment = BuildNodesFragment.newInstance("","");
-//                break;
-//            default : fragment = ViewPagerFragment.getInstance(position);
-//                break;
-//        }
+//        ViewPagerFragment fragment = ViewPagerFragment.getInstance(position);
+
+        // create frag variable
+        Fragment fragment = null;
+        switch (position){
+            case IN_THEATRES :
+                fragment = InTheatresFragment.getInstance(position);
+                break;
+            default : fragment = ViewPagerFragment.getInstance(position);
+                break;
+        }
 
         return fragment;
     }

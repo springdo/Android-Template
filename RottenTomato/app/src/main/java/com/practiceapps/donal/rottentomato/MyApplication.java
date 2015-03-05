@@ -4,7 +4,13 @@ import android.app.Application;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.practiceapps.donal.rottentomato.network.RottenAPIServiceInterface;
+import com.practiceapps.donal.rottentomato.bus.BusProvider;
+import com.practiceapps.donal.rottentomato.events.DataLoadedErrorEvent;
+import com.practiceapps.donal.rottentomato.logging.L;
+import com.practiceapps.donal.rottentomato.network.RottenAPI;
+import com.practiceapps.donal.rottentomato.network.RottenServRepo;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -15,7 +21,9 @@ import retrofit.converter.GsonConverter;
 public class MyApplication extends Application {
 
     private static MyApplication sInstance;
-    private static RottenAPIServiceInterface sRottenAPIServiceInterface;
+    private Bus mBus = BusProvider.getInstance();
+    private RottenServRepo mRottenServRepo;
+    private static RottenAPI sRottenAPIServiceInterface;
 
     @Override
     // gets called as the app starts
@@ -26,14 +34,27 @@ public class MyApplication extends Application {
                 .setEndpoint("http://api.rottentomatoes.com")
                 .setConverter(new GsonConverter(new Gson()))
                 .build();
-        this.sRottenAPIServiceInterface = restAdapter.create(RottenAPIServiceInterface.class);
+        this.sRottenAPIServiceInterface = restAdapter.create(RottenAPI.class);
+
+        mRottenServRepo = new RottenServRepo(sRottenAPIServiceInterface, mBus);
+
+        mBus.register(mRottenServRepo);
+        //listen for "global" events such as the errror hanlder
+        mBus.register(this);
+
+    }
+
+    @Subscribe
+    public void onDataLoadError(DataLoadedErrorEvent event){
+        L.tS(getApplicationContext(), "Error - try again later");
+        L.mV(getApplicationContext(), event.getmRetrofitError().getMessage());
     }
 
     public static MyApplication getInstance(){
         return sInstance;
     }
 
-    public static RottenAPIServiceInterface getRottenAPIServiceInterface() {return sRottenAPIServiceInterface;}
+    public static RottenAPI getRottenAPIServiceInterface() {return sRottenAPIServiceInterface;}
 
     public static Context getAppContext (){
         return sInstance.getApplicationContext();

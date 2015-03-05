@@ -1,5 +1,6 @@
-package com.practiceapps.donal.rottentomato;
+package com.practiceapps.donal.rottentomato.activities;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.practiceapps.donal.rottentomato.R;
 import com.practiceapps.donal.rottentomato.adapters.ViewPagerAdapter;
 import com.practiceapps.donal.rottentomato.tabs.SlidingTabLayout;
 
@@ -61,6 +63,12 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+
+        if (id == R.id.action_search) {
+            startActivity(new Intent(this, SearchActivity.class));
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

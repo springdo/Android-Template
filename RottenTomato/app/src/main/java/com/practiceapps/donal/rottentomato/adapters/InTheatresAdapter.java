@@ -11,7 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.practiceapps.donal.rottentomato.*;
-import com.practiceapps.donal.rottentomato.pojo.MoviesInTheatre.Movie;
+import com.practiceapps.donal.rottentomato.pojo.MyMovies.*;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

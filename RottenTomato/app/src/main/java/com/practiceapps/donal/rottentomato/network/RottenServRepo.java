@@ -3,7 +3,10 @@ package com.practiceapps.donal.rottentomato.network;
 import com.practiceapps.donal.rottentomato.events.DataLoadEvent;
 import com.practiceapps.donal.rottentomato.events.DataLoadedErrorEvent;
 import com.practiceapps.donal.rottentomato.events.DataLoadedEvent;
+import com.practiceapps.donal.rottentomato.events.SearchDataEvent;
+import com.practiceapps.donal.rottentomato.events.SearchDataLoadedEvent;
 import com.practiceapps.donal.rottentomato.pojo.MoviesInTheatre.MoviesInTheatre;
+import com.practiceapps.donal.rottentomato.pojo.MyMovies.SearchMovies;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -30,9 +33,9 @@ public class RottenServRepo {
     // subscribe to the call for data event
     @Subscribe
     public void onLoadDataEvent (DataLoadEvent event){
-        mRottenAPI.InTheatres(new Callback<MoviesInTheatre>() {
+        mRottenAPI.InTheatres(new Callback<SearchMovies>() {
             @Override
-            public void success(MoviesInTheatre moviesInTheatre, Response response) {
+            public void success(SearchMovies moviesInTheatre, Response response) {
                 mBus.post(new DataLoadedEvent(moviesInTheatre));
             }
 
@@ -42,5 +45,22 @@ public class RottenServRepo {
             }
         });
     }
+
+    @Subscribe
+    public void onSearchDataEvent (SearchDataEvent event){
+        mRottenAPI.SearchMovies(event.getmSearchTerm(), new Callback<SearchMovies>() {
+            @Override
+            public void success(SearchMovies searchMovies, Response response) {
+                mBus.post(new SearchDataLoadedEvent(searchMovies));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mBus.post(new DataLoadedErrorEvent(error));
+            }
+
+        });
+    }
+
 
 }

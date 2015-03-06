@@ -5,19 +5,42 @@ import android.support.v4.view.MenuCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 
 import com.practiceapps.donal.rottentomato.R;
+import com.practiceapps.donal.rottentomato.adapters.InTheatresAdapter;
+import com.practiceapps.donal.rottentomato.bus.BusProvider;
+import com.practiceapps.donal.rottentomato.events.DataLoadEvent;
+import com.practiceapps.donal.rottentomato.events.DataLoadedEvent;
+import com.practiceapps.donal.rottentomato.events.SearchDataEvent;
+import com.practiceapps.donal.rottentomato.events.SearchDataLoadedEvent;
+import com.practiceapps.donal.rottentomato.fragments.SearchFragment;
 import com.practiceapps.donal.rottentomato.logging.L;
+import com.practiceapps.donal.rottentomato.pojo.MyMovies.*;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import com.practiceapps.donal.rottentomato.fragments.*;
+
+import java.util.ArrayList;
 
 public class SearchActivity extends ActionBarActivity {
 
-    SearchView mSearchView;
+    private SearchView mSearchView;
+    private Bus mBus = BusProvider.getInstance();
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private InTheatresAdapter mInTheatresAdapter;
+    private ArrayList<Movie> mMovieArrayList =  new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +50,26 @@ public class SearchActivity extends ActionBarActivity {
         // used to customise the toolbar and enable home features
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.search_recycler);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+
+        // init and set data on the adaper
+        mInTheatresAdapter = new InTheatresAdapter(this, mMovieArrayList);
+        L.mV(this, "onCreateView data list :: "+String.valueOf(mMovieArrayList));
+        mInTheatresAdapter.setMovieArrayList(mMovieArrayList);
+        mRecyclerView.setAdapter(mInTheatresAdapter);
+
+//          FRAGMENT NEVER LOADED DATA?!
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.frag_container, new SearchFragment())
+//                    .commit();
+//        }
+
     }
 
 
@@ -53,9 +96,8 @@ public class SearchActivity extends ActionBarActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 L.tS(getApplicationContext(), "searchView query :: "+s);
-
-
-
+                // not sure about this location....
+                mBus.post(new SearchDataEvent(s));
                 return true;
             }
 
@@ -74,6 +116,39 @@ public class SearchActivity extends ActionBarActivity {
         if (imm != null) {
             imm.showSoftInput(view, 0);
         }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBus.unregister(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBus.register(this);
+//        mBus.post(new SearchDataEvent());
+    }
+
+//    //TODO  move to fragment
+//    @Subscribe
+//    public void onSearchDataLoadedEvent(SearchDataLoadedEvent event){
+//        L.mV(this, "Search Movies data total data :: " + event.getmSearchMovies().getTotal());
+//        L.tS(this, "First Movie :: "+event.getmSearchMovies().getMovies().get(0).getTitle());
+//    }
+
+
+    @Subscribe
+    public void onSearchDataLoadedEvent(SearchDataLoadedEvent event){
+        L.mV(this, "Search Movies data total data :: " + event.getmSearchMovies().getTotal());
+        L.tS(this, "First Movie :: "+event.getmSearchMovies().getMovies().get(0).getTitle());
+        L.mV(this, "Movies from search data total data :: " + event.getmSearchMovies().getTotal());
+//        mInTheatresAdapter.setMovieArrayList(event.getmMoviesInTheatre().getMovies());
+        mMovieArrayList = new ArrayList<>(event.getmSearchMovies().getMovies());
+        mInTheatresAdapter.setMovieArrayList(mMovieArrayList);
+        L.mV(this, "onSearchDataLoadedEvent movieArrayList :: "+ String.valueOf(mMovieArrayList));
     }
 
     @Override

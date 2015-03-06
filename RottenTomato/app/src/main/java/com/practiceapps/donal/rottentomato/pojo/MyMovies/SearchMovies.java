@@ -1,5 +1,5 @@
 
-package com.practiceapps.donal.rottentomato.pojo.SearchMovies;
+package com.practiceapps.donal.rottentomato.pojo.MyMovies;
 
 import java.util.ArrayList;
 import java.util.List;

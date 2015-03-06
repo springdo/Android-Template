@@ -16,7 +16,7 @@ import com.practiceapps.donal.rottentomato.bus.BusProvider;
 import com.practiceapps.donal.rottentomato.events.DataLoadEvent;
 import com.practiceapps.donal.rottentomato.events.DataLoadedEvent;
 import com.practiceapps.donal.rottentomato.logging.L;
-import com.practiceapps.donal.rottentomato.pojo.MoviesInTheatre.Movie;
+import com.practiceapps.donal.rottentomato.pojo.MyMovies.*;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 

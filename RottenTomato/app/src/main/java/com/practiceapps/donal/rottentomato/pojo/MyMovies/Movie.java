@@ -1,5 +1,5 @@
 
-package com.practiceapps.donal.rottentomato.pojo.SearchMovies;
+package com.practiceapps.donal.rottentomato.pojo.MyMovies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,12 @@ public class Movie {
     @Expose
     private String title;
     @Expose
-    private Integer year;
+    private String year;
     @SerializedName("mpaa_rating")
     @Expose
     private String mpaaRating;
     @Expose
-    private Integer runtime;
+    private String runtime;
     @SerializedName("critics_consensus")
     @Expose
     private String criticsConsensus;
@@ -93,7 +93,7 @@ public class Movie {
      * @return
      *     The year
      */
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -102,11 +102,11 @@ public class Movie {
      * @param year
      *     The year
      */
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
-    public Movie withYear(Integer year) {
+    public Movie withYear(String year) {
         this.year = year;
         return this;
     }
@@ -139,7 +139,7 @@ public class Movie {
      * @return
      *     The runtime
      */
-    public Integer getRuntime() {
+    public String getRuntime() {
         return runtime;
     }
 
@@ -148,11 +148,11 @@ public class Movie {
      * @param runtime
      *     The runtime
      */
-    public void setRuntime(Integer runtime) {
+    public void setRuntime(String runtime) {
         this.runtime = runtime;
     }
 
-    public Movie withRuntime(Integer runtime) {
+    public Movie withRuntime(String runtime) {
         this.runtime = runtime;
         return this;
     }

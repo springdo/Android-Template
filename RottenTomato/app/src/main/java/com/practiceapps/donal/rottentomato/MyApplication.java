@@ -31,6 +31,7 @@ public class MyApplication extends Application {
         super.onCreate();
         sInstance = this;
         RestAdapter restAdapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint("http://api.rottentomatoes.com")
                 .setConverter(new GsonConverter(new Gson()))
                 .build();

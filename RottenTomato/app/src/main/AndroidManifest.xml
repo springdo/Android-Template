@@ -26,13 +26,26 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.practiceapps.donal.rottentomato.activities.MainActivity" />
         </activity>
-
+        <activity
+            android:name="com.practiceapps.donal.rottentomato.activities.DummyActivity"
+            android:label="@string/title_activity_dummy" >
+        </activity>
+        <activity
+            android:name="com.practiceapps.donal.rottentomato.activities.MovieDetails"
+            android:label="@string/title_activity_movie_details"
+            android:parentActivityName="com.practiceapps.donal.rottentomato.activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.practiceapps.donal.rottentomato.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

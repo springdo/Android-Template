@@ -1,5 +1,5 @@
 
-package com.practiceapps.donal.rottentomato.pojo.SearchMovies;
+package com.practiceapps.donal.rottentomato.pojo.MyMovies;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
